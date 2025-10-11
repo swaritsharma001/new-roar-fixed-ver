@@ -11,8 +11,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
 import { ArrowRight, Star, Users, Award, CheckCircle, Mail, Phone } from "lucide-react"
-import SplitText from "@/components/ui/SplitText";
-import CurvedLoop from "@/components/ui/CurvedLoop.tsx"
+
 import ContactForm from "@/components/Contact"
 import NewsInsights from "@/components/News"
 import Cookies from "js-cookie"
@@ -189,21 +188,7 @@ const Home = ({ initialPageData, initialTeamMembers, initialFeaturedProperties, 
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/50" />
 
           <div className="relative z-10 container mx-auto px-4 text-center text-white pt-20 md:pt-32">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 md:mb-8 leading-tight">
-              <SplitText
-                text={page?.HeroTitle || "Find Your Dream Luxury Home"}
-                className="text-center"
-                delay={100}
-                duration={0.6}
-                ease="power3.out"
-                splitType="chars"
-                from={{ opacity: 0, y: 40 }}
-                to={{ opacity: 1, y: 0 }}
-                threshold={0.1}
-                rootMargin="-100px"
-                textAlign="center"
-              />
-            </h1>
+            
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-8 md:mb-12 max-w-3xl mx-auto text-gray-200 px-4">
               {page?.HeroSubtitle || "Discover Dubai's most exclusive properties with Roar Realty. Your gateway to luxury living in the heart of the UAE."}
             </p>
@@ -234,16 +219,7 @@ const Home = ({ initialPageData, initialTeamMembers, initialFeaturedProperties, 
             </div>
           </div>
         </section>
-                    <div className="my-8 h-32 overflow-visible flex items-center justify-center ">
-          <CurvedLoop 
-            marqueeText="Premium Properties ✦ Dubai ✦ Luxury Living ✦"
-            speed={4}
-            curveAmount={0}
-            direction="right"
-            interactive={true}
-            className="text-8xl font-bold text-black"
-          />
-        </div>
+
         <section id="properties" className="py-16 sm:py-20 bg-white border-t border-gray-100">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12 md:mb-16">
