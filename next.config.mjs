@@ -1,4 +1,3 @@
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -6,18 +5,9 @@ const nextConfig = {
     unoptimized: true,
     domains: ['api.reelly.io'],
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'api.reelly.io',
-      },
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-      {
-        protocol: 'http',
-        hostname: '**',
-      },
+      { protocol: 'https', hostname: 'api.reelly.io' },
+      { protocol: 'https', hostname: '**' },
+      { protocol: 'http', hostname: '**' },
     ],
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
@@ -26,25 +16,15 @@ const nextConfig = {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  experimental: {
-    optimizeCss: true,
+  eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: true },
+  experimental: { 
+    optimizeCss: true, 
     scrollRestoration: true,
+    allowedDevOrigins: ['*.replit.dev', '*.repl.co'],
   },
-  allowedDevOrigins: [
-    '*.replit.dev',
-    '*.repl.co',
-  ],
-  compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
-  },
+  compiler: { removeConsole: process.env.NODE_ENV === 'production' },
   webpack: (config, { isServer }) => {
-    // Ignore irrelevant files and directories
     config.watchOptions = {
       ignored: [
         '**/node_modules/**',
@@ -54,9 +34,8 @@ const nextConfig = {
         '**/vite.config.ts',
         '**/index.html'
       ]
-    }
-    
-    // Resolve fallbacks for client-side
+    };
+
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
@@ -65,39 +44,26 @@ const nextConfig = {
         crypto: false,
       }
     }
-    
-    return config
+
+    return config;
   },
   async headers() {
     return [
       {
         source: '/(.*)',
         headers: [
-          {
-            key: 'X-Robots-Tag',
-            value: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
-          },
-          {
-            key: 'Cache-Control',
-            value: 'no-cache, no-store, must-revalidate',
-          },
+          { key: 'X-Robots-Tag', value: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' },
+          { key: 'Cache-Control', value: 'no-cache, no-store, must-revalidate' },
         ],
       },
       {
         source: '/assets/(.*)',
         headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
       },
     ]
   },
-  
-  experimental: {
-    allowedDevOrigins: ['*.replit.dev', '*.repl.it'],
-  },
 }
 
-module.exports = nextConfig
+export default nextConfig;
