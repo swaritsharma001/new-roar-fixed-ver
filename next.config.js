@@ -1,12 +1,23 @@
+
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   images: {
     unoptimized: true,
     domains: ['api.reelly.io'],
     remotePatterns: [
-      { protocol: 'https', hostname: 'api.reelly.io' },
-      { protocol: 'https', hostname: '**' },
-      { protocol: 'http', hostname: '**' },
+      {
+        protocol: 'https',
+        hostname: 'api.reelly.io',
+      },
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+      {
+        protocol: 'http',
+        hostname: '**',
+      },
     ],
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
@@ -15,21 +26,37 @@ const nextConfig = {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
-  eslint: { ignoreDuringBuilds: true },
-  typescript: { ignoreBuildErrors: true },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  experimental: {
+    optimizeCss: true,
+    scrollRestoration: true,
+  },
+  allowedDevOrigins: [
+    '*.replit.dev',
+    '*.repl.co',
+  ],
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
   webpack: (config, { isServer }) => {
+    // Ignore irrelevant files and directories
     config.watchOptions = {
       ignored: [
         '**/node_modules/**',
         '**/.git/**',
+        '**/abc-reality/**',
         '**/attached_assets/**',
         '**/vite.config.ts',
-        '**/index.html',
-      ],
+        '**/index.html'
+      ]
     }
+    
+    // Resolve fallbacks for client-side
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
@@ -38,6 +65,7 @@ const nextConfig = {
         crypto: false,
       }
     }
+    
     return config
   },
   async headers() {
@@ -47,8 +75,7 @@ const nextConfig = {
         headers: [
           {
             key: 'X-Robots-Tag',
-            value:
-              'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+            value: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
           },
           {
             key: 'Cache-Control',
@@ -67,9 +94,9 @@ const nextConfig = {
       },
     ]
   },
+  
   experimental: {
-    optimizeCss: true,
-    scrollRestoration: true,
+    allowedDevOrigins: ['*.replit.dev', '*.repl.it'],
   },
 }
 
