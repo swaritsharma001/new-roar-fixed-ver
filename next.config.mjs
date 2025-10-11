@@ -21,8 +21,8 @@ const nextConfig = {
   experimental: { 
     optimizeCss: true, 
     scrollRestoration: true,
-    allowedDevOrigins: ['*.replit.dev', '*.repl.co'],
   },
+  allowedDevOrigins: ['*.replit.dev', '*.repl.co'], // ✅ top-level pe daal diya
   compiler: { removeConsole: process.env.NODE_ENV === 'production' },
   webpack: (config, { isServer }) => {
     config.watchOptions = {
