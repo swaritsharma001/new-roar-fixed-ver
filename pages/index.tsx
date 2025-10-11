@@ -13,8 +13,8 @@ import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carouse
 import { ArrowRight, Star, Users, Award, CheckCircle, Mail, Phone } from "lucide-react"
 import SplitText from "@/components/ui/SplitText";
 import CurvedLoop from "@/components/ui/CurvedLoop.tsx"
-import ContactForm from "@/components/Contact.tsx"
-import NewsInsights from "@/components/News.tsx"
+import ContactForm from "@/components/Contact"
+import NewsInsights from "@/components/News"
 import Cookies from "js-cookie"
 import { useEffect } from "react"
 interface PropertyData {
