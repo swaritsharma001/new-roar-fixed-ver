@@ -6,6 +6,7 @@ import dataRouter from "./routes/dataRouter.js"
 import pageRouter from "./routes/pageRouter.js"
 import teamRouter from "./routes/teamRouter.js"
 import aiRouter from "./routes/aiRouter.js"
+import blog from "./routes/blog.js"
 import session from "express-session"
 
 
@@ -32,6 +33,7 @@ app.use("/property", dataRouter)
 app.use("/page", pageRouter)
 app.use("/team", teamRouter)
 app.use("/chat", aiRouter)
+app.use("/blog", blog)
 
 app.get("/api", (req, res)=>{
   res.json({message: "Hello from server"})

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { MessageCircle, Send, CheckCircle, AlertCircle, Loader } from 'lucide-react';
+import axios from 'axios'
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -11,11 +12,17 @@ const ContactForm = () => {
   });
 
   const [status, setStatus] = useState({ type: '', message: '' });
+  const [page, setPage] = useState([])
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
+  const handlePage = (e) => {
+    const res = axios.get(`${process.env.NEXT_PUBLIC_API_URL}/page`)
+    setPage(res.data)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,7 +73,7 @@ const ContactForm = () => {
 
         <div className="flex justify-center mb-8">
           <a
-            href="https://wa.me/971585005438"
+            href={`https://wa.me/${page?.BuyPhone}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"

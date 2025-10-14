@@ -144,15 +144,6 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
   const menuSections: MenuSection[] = [
     {
-      label: "Services",
-      items: [
-        { label: "Property Management", href: "/services/management" },
-        { label: "Mortgage Services", href: "/services/mortgage" },
-        { label: "Legal Services", href: "/services/legal" },
-        { label: "Home Moving", href: "/services/moving" },
-      ],
-    },
-    {
       label: "Developers",
       items: [
         { label: "DAMAC", href: "/properties?developer=DAMAC" },
@@ -207,8 +198,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   ];
 
   const simpleLinks = [
-    { label: "Blogs", href: "/blogs" },
-    { label: "More", href: "/more" },
+    { label: "Blogs", href: "/blog" },
   ];
 
   if (!isOpen) return null;

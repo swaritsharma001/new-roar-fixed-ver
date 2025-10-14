@@ -139,4 +139,19 @@ const CurvedLoop: FC<CurvedLoopProps> = ({
   );
 };
 
-export default CurvedLoop;
+export default function PropertyMarquee() {
+  return (
+    <div className="w-full bg-gradient-to-r from-amber-50 via-white to-amber-50 py-6">
+      <div className="my-4 h-20 overflow-visible flex items-center justify-center">
+        <CurvedLoop 
+          marqueeText="Premium Properties ✦ Dubai Real Estate ✦ Luxury Living ✦ Investment Opportunities ✦"
+          speed={3.5}
+          curveAmount={0}
+          direction="right"
+          interactive={true}
+          className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-7xl font-bold fill-gray-900"
+        />
+      </div>
+    </div>
+  );
+}
