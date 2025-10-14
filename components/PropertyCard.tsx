@@ -4,6 +4,8 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { MapPin, Bed, Bath, Square, Heart, Phone, MessageCircle } from "lucide-react"
 import Link from "next/link"
+import { useEffect, useState } from "react"
+
 interface PropertyCardProps {
   property: {
     id: string
@@ -23,6 +25,15 @@ interface PropertyCardProps {
 }
 
 export function PropertyCard({ property }: PropertyCardProps) {
+  const [page, setPage] = useState([])
+  async function data(){
+    const res = await fetch("https://api.roarrealty.ae/page")
+    const data = await res.json()
+    setPage(data)
+  }
+  useEffect(()=>{
+    data()
+  }, [page])
   return (
     <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 group border-border/50 w-full max-w-[340px]">
       {/* Image Section - Compact */}
@@ -102,13 +113,13 @@ export function PropertyCard({ property }: PropertyCardProps) {
             className="flex-1 h-10 text-sm font-semibold hover:bg-muted"
           >
             <Phone className="h-4 w-4 mr-1.5" />
-            Call
+            <a href={`tel:${page[0]?.BuyPhone}`}>Call</a>
           </Button>
           <Button 
             className="flex-1 h-10 text-sm font-semibold"
           >
             <MessageCircle className="h-4 w-4 mr-1.5" />
-            WhatsApp
+            <a href={`https://wa.me/${page[0]?.BuyPhone}`}>WhatsApp</a>
           </Button>
         </div>
       </CardContent>
