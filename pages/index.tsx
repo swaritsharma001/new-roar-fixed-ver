@@ -332,7 +332,7 @@ const Home = ({ initialPageData, initialTeamMembers, initialFeaturedProperties, 
                 </div>
 
                 <Button size="lg" className="bg-black text-white hover:bg-gray-800 font-semibold px-8 py-6 rounded-xl shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-300">
-                  <a href="/about">Learn More About Us</a>
+                  <a href="/story">Learn More About Us</a>
                 </Button>
               </div>
 
