@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MessageCircle, Send, CheckCircle, AlertCircle, Loader } from 'lucide-react';
 import axios from 'axios'
 
@@ -23,6 +23,9 @@ const ContactForm = () => {
     const res = axios.get(`${process.env.NEXT_PUBLIC_API_URL}/page`)
     setPage(res.data)
   }
+  useEffect(() => {
+    handlePage()
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault();

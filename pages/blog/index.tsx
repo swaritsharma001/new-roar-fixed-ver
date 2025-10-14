@@ -18,7 +18,7 @@ export default function BlogPage() {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog/allblogs`);
       const data = await response.json();
-      setBlogs(data.blogs || []);
+      setBlogs(data.blogs);
     } catch (error) {
       console.error('Error fetching blogs:', error);
     } finally {

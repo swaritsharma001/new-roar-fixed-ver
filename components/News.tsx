@@ -28,7 +28,7 @@ const NewsInsights = () => {
     const fetchBlogs = async () => {
       try {
         setLoading(true);
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
         const response = await fetch(`${apiUrl}/blog/allblogs`);
 
         if (!response.ok) {
