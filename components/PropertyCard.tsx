@@ -113,13 +113,13 @@ export function PropertyCard({ property }: PropertyCardProps) {
             className="flex-1 h-10 text-sm font-semibold hover:bg-muted"
           >
             <Phone className="h-4 w-4 mr-1.5" />
-            <a href={`tel:${page[0]?.BuyPhone}`}>Call</a>
+            <a href={`tel:${page?.BuyPhone}`}>Call</a>
           </Button>
           <Button 
             className="flex-1 h-10 text-sm font-semibold"
           >
             <MessageCircle className="h-4 w-4 mr-1.5" />
-            <a href={`https://wa.me/${page[0]?.BuyPhone}`}>WhatsApp</a>
+            <a href={`https://wa.me/${page?.BuyPhone}`}>WhatsApp</a>
           </Button>
         </div>
       </CardContent>
