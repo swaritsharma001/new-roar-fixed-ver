@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { MessageCircle, Send, CheckCircle, AlertCircle, Loader } from 'lucide-react';
-import axios from 'axios'
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -12,23 +11,71 @@ const ContactForm = () => {
   });
 
   const [status, setStatus] = useState({ type: '', message: '' });
-  const [page, setPage] = useState([])
+  const [page, setPage] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleChange = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handlePage = (e) => {
-    const res = axios.get(`${process.env.NEXT_PUBLIC_API_URL}/page`)
-    setPage(res.data)
-  }
+  // Fixed: Made async and added error handling
   useEffect(() => {
-    handlePage()
-  }, [])
+    const fetchPageData = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/page`);
+        if (response.ok) {
+          const data = await response.json();
+          setPage(data);
+        } else {
+          console.error('Failed to fetch page data');
+        }
+      } catch (error) {
+        console.error('Error fetching page data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPageData();
+  }, []);
+
+  // Added validation function
+  const validateForm = () => {
+    if (!formData.name.trim()) {
+      setStatus({ type: 'error', message: 'Please enter your full name.' });
+      return false;
+    }
+    if (!formData.email.trim()) {
+      setStatus({ type: 'error', message: 'Please enter your email address.' });
+      return false;
+    }
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setStatus({ type: 'error', message: 'Please enter a valid email address.' });
+      return false;
+    }
+    if (!formData.phone.trim()) {
+      setStatus({ type: 'error', message: 'Please enter your phone number.' });
+      return false;
+    }
+    if (!formData.message.trim()) {
+      setStatus({ type: 'error', message: 'Please enter your message.' });
+      return false;
+    }
+    return true;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate before submitting
+    if (!validateForm()) {
+      return;
+    }
+
     setIsSubmitting(true);
     setStatus({ type: '', message: '' });
 
@@ -74,19 +121,22 @@ const ContactForm = () => {
           </p>
         </div>
 
-        <div className="flex justify-center mb-8">
-          <a
-            href={`https://wa.me/${page?.BuyPhone}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
-          >
-            <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-              <MessageCircle className="w-5 h-5 text-green-500" />
-            </div>
-            <span className="text-base font-semibold">Chat on WhatsApp</span>
-          </a>
-        </div>
+        {/* Fixed: Added loading state and null check */}
+        {!isLoading && page?.BuyPhone && (
+          <div className="flex justify-center mb-8">
+            <a
+              href={`https://wa.me/${page.BuyPhone}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+            >
+              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                <MessageCircle className="w-5 h-5 text-green-500" />
+              </div>
+              <span className="text-base font-semibold">Chat on WhatsApp</span>
+            </a>
+          </div>
+        )}
 
         <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 backdrop-blur-sm">
           {status.message && (
@@ -105,17 +155,45 @@ const ContactForm = () => {
           )}
 
           <form className="space-y-6" onSubmit={handleSubmit}>
-            <InputField label="Full Name *" id="name" name="name" value={formData.name} onChange={handleChange} placeholder="Enter your full name" />
-            <InputField label="Email Address *" id="email" name="email" value={formData.email} onChange={handleChange} placeholder="your.email@example.com" type="email" />
-            <InputField label="Phone Number *" id="phone" name="phone" value={formData.phone} onChange={handleChange} placeholder="+91 8282828282" />
+            <InputField 
+              label="Full Name *" 
+              id="name" 
+              name="name" 
+              value={formData.name} 
+              onChange={handleChange} 
+              placeholder="Enter your full name"
+              required 
+            />
+            <InputField 
+              label="Email Address *" 
+              id="email" 
+              name="email" 
+              value={formData.email} 
+              onChange={handleChange} 
+              placeholder="your.email@example.com" 
+              type="email"
+              required 
+            />
+            <InputField 
+              label="Phone Number *" 
+              id="phone" 
+              name="phone" 
+              value={formData.phone} 
+              onChange={handleChange} 
+              placeholder="+91 8282828282"
+              required 
+            />
 
             <div>
-              <label htmlFor="language" className="block text-sm font-semibold text-gray-700 mb-2">Preferred Language *</label>
+              <label htmlFor="language" className="block text-sm font-semibold text-gray-700 mb-2">
+                Preferred Language *
+              </label>
               <select
                 id="language"
                 name="language"
                 value={formData.language}
                 onChange={handleChange}
+                required
                 className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
               >
                 <option value="English">English</option>
@@ -126,7 +204,9 @@ const ContactForm = () => {
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">Message *</label>
+              <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
+                Message *
+              </label>
               <textarea
                 id="message"
                 name="message"
@@ -134,6 +214,7 @@ const ContactForm = () => {
                 onChange={handleChange}
                 placeholder="Tell us about your requirements..."
                 rows={5}
+                required
                 className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all resize-none"
               />
             </div>
@@ -141,7 +222,7 @@ const ContactForm = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:opacity-50 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg flex items-center justify-center gap-2"
             >
               {isSubmitting ? (
                 <>
@@ -166,9 +247,11 @@ const ContactForm = () => {
   );
 };
 
-const InputField = ({ label, id, name, value, onChange, placeholder, type = 'text' }) => (
+const InputField = ({ label, id, name, value, onChange, placeholder, type = 'text', required = false }) => (
   <div>
-    <label htmlFor={id} className="block text-sm font-semibold text-gray-700 mb-2">{label}</label>
+    <label htmlFor={id} className="block text-sm font-semibold text-gray-700 mb-2">
+      {label}
+    </label>
     <input
       type={type}
       id={id}
@@ -176,6 +259,7 @@ const InputField = ({ label, id, name, value, onChange, placeholder, type = 'tex
       value={value}
       onChange={onChange}
       placeholder={placeholder}
+      required={required}
       className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all"
     />
   </div>
