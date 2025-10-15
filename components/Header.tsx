@@ -12,6 +12,7 @@ export function Header() {
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           {/* Logo */}
           <a href="/" className="flex items-center space-x-2">
+            <div className="flex space-x-2"><img src="/fav.ico" className="h-12 w-12" alt="Logo" /></div>
             <span className="text-3xl font-bold text-primary">
               Roar Realty<span className="text-accent">.</span>
             </span>
