@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import Image from "next/image"
@@ -152,10 +153,10 @@ export function ChatModal({ open, onOpenChange }: ChatModalProps) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className={`sm:max-w-lg transition-all duration-300 ease-in-out ${
         isMinimized ? 'h-[80px]' : 'h-[650px]'
-      } flex flex-col p-0 overflow-hidden bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 border-0 shadow-2xl`}>
+      } flex flex-col p-0 overflow-hidden bg-gradient-to-br from-white to-gray-50 border-0 shadow-2xl`}>
         
         {/* Enhanced Header */}
-        <DialogHeader className="p-4 pb-3 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-luxury/5 to-luxury-light/5">
+        <DialogHeader className="p-4 pb-3 border-b border-gray-200 bg-gradient-to-r from-luxury/5 to-luxury-light/5">
           <DialogTitle className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="relative">
@@ -183,7 +184,7 @@ export function ChatModal({ open, onOpenChange }: ChatModalProps) {
               variant="ghost" 
               size="sm" 
               onClick={() => setIsMinimized(!isMinimized)}
-              className="h-8 w-8 p-0 hover:bg-gray-100 dark:hover:bg-gray-800"
+              className="h-8 w-8 p-0 hover:bg-gray-100"
             >
               <Minimize2 className="h-4 w-4" />
             </Button>
@@ -194,7 +195,7 @@ export function ChatModal({ open, onOpenChange }: ChatModalProps) {
           <>
             {/* Quick Questions */}
             {messages.length === 1 && (
-              <div className="px-4 py-3 border-b border-gray-20 ">
+              <div className="px-4 py-3 border-b border-gray-200">
                 <p className="text-xs font-medium text-muted-foreground mb-2">Quick questions:</p>
                 <div className="flex flex-wrap gap-2">
                   {quickQuestions.map((question, index) => (
@@ -206,7 +207,7 @@ export function ChatModal({ open, onOpenChange }: ChatModalProps) {
                         setInputValue(question)
                         handleSendMessage()
                       }}
-                      className="text-xs h-7 px-3 bg-luxury/80 hover:bg-luxury/10 hover:border-luxury transition-all duration-200"
+                      className="text-xs h-7 px-3 bg-luxury/5 hover:bg-luxury/10 hover:border-luxury transition-all duration-200"
                     >
                       {question}
                     </Button>
@@ -247,7 +248,7 @@ export function ChatModal({ open, onOpenChange }: ChatModalProps) {
                           className={`px-4 py-3 rounded-2xl text-sm shadow-sm transition-all duration-200 hover:shadow-md ${
                             message.sender === "user"
                               ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-br-md"
-                              : "bg-white dark:bg-gray-800 text-foreground border border-gray-200 dark:border-gray-700 rounded-bl-md"
+                              : "bg-white text-foreground border border-gray-200 rounded-bl-md"
                           }`}
                         >
                           <div className="prose prose-sm max-w-none prose-headings:text-luxury prose-headings:font-bold prose-p:mb-2 prose-p:leading-relaxed">
@@ -271,7 +272,7 @@ export function ChatModal({ open, onOpenChange }: ChatModalProps) {
                       <div className="h-8 w-8 rounded-full bg-gradient-to-r from-luxury to-luxury-light flex items-center justify-center shadow-lg shrink-0">
                         <Sparkles className="h-4 w-4 text-white animate-pulse" />
                       </div>
-                      <div className="px-4 py-3 rounded-2xl rounded-bl-md bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm">
+                      <div className="px-4 py-3 rounded-2xl rounded-bl-md bg-white border border-gray-200 shadow-sm">
                         <div className="flex space-x-1">
                           <div className="w-2 h-2 bg-luxury rounded-full animate-bounce"></div>
                           <div className="w-2 h-2 bg-luxury rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
@@ -287,7 +288,7 @@ export function ChatModal({ open, onOpenChange }: ChatModalProps) {
             </ScrollArea>
 
             {/* Enhanced Input Area */}
-            <div className="p-4 pt-3 border-t border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+            <div className="p-4 pt-3 border-t border-gray-200 bg-white/50 backdrop-blur-sm">
               <div className="flex space-x-3 items-end">
                 <div className="flex-1 relative">
                   <Input
@@ -295,7 +296,7 @@ export function ChatModal({ open, onOpenChange }: ChatModalProps) {
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyPress={handleKeyPress}
                     placeholder="Ask me anything about Dubai properties..."
-                    className="resize-none border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-luxury focus:border-luxury rounded-xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm shadow-sm"
+                    className="resize-none border-gray-300 focus:ring-2 focus:ring-luxury focus:border-luxury rounded-xl bg-white/80 backdrop-blur-sm shadow-sm"
                     disabled={isTyping}
                   />
                   {inputValue && (
